@@ -6,62 +6,64 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 01:19:09 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/05 00:14:52 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/07 00:58:03 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
+# define Nt 15
+# define MAX 10
+
 typedef struct s_data
 {
+	int					id;
 	long int			num;
-	pthread_mutex_t	lock;
 }	t_data;
 
 void	*ft_wait(void *arg)
 {
-	t_data	*shared_data;
-
-	shared_data = (t_data *) arg;
-	pthread_mutex_lock(&shared_data->lock);
-	while (shared_data->num < 100)
+	t_data	*data;
+	
+	data = (t_data *) arg;
+	while (data->num < MAX)
 	{
-		shared_data->num++;
-		printf("%ld\n", shared_data->num);
+		usleep(100*1000);
+		printf("Thread %d in %ld\n", data->id, data->num);
+		data->num++;
 	}
-	printf("Done: %ld\n", shared_data->num);
-	pthread_mutex_unlock(&shared_data->lock);
-	(void ) arg;
 	return (NULL);
 }
 
 int	main(int argc, char **argv)
 {
-	pthread_t	t1;
-	pthread_t	t2;
+	pthread_t	threads[Nt];
+	t_data		data[Nt];
 	int			err;
-	t_data		data;
+	int			i;
 
-	if (argc != 2)
+	if (argc !=  1)
 	{
 		printf("Error\n");
 		return (FAIL);
 	}
-	if (pthread_mutex_init(&data.lock, NULL) != 0)
+	err = 0;
+	i = -1;
+	while (++i < Nt)
 	{
-		printf("Mudex init failed. \n");
-	}
-	data.num= 0;
-	err = pthread_create(&t1, NULL, ft_wait, &data);
-	err += pthread_create(&t2, NULL, ft_wait, &data);
-	if (err != 0)
-	{
-		printf("An error ocurred: %d\n", err);
-		return (FAIL);
+		data[i].id = i;
+		data[i].num = 0;
+		err += pthread_create(&threads[i], NULL, ft_wait, &data[i]);
+		if (err != 0)
+		{
+			printf("Error failed thread creation\n");
+			return (FAIL);
+		}
 	}
 	printf("Waiting for thread to end...\n");
-	pthread_join(t1, NULL);
-	pthread_join(t2, NULL);
+	i = -1;
+	while (++i < Nt)
+		pthread_join(threads[i], NULL);
 	printf("Thread ended.\n");
 	(void ) argc;
 	(void ) argv;

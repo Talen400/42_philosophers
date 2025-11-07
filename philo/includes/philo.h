@@ -7,6 +7,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <time.h>
 
 # define SUCESS 0
 # define FAIL 1

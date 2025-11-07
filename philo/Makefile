@@ -91,16 +91,35 @@ fclean: clean
 
 re: fclean all
 
-valgrind: $(NAME)
-	@echo "$(YELLOW)Running Valgrind on $(NAME) with $(MAP)...$(RESET)"
-	@valgrind --leak-check=full --show-leak-kinds=all \
-			--track-fds=yes \
-		./$(NAME)
+# valgrind and leaks
 
-valgrind_bonus: bonus
-	@echo "$(YELLOW)Running Valgrind on $(NAME) with $(MAP)...$(RESET)"
-	@valgrind --leak-check=full --show-leak-kinds=all \
-			--track-fds=yes \
-		./$(NAME)
+LEAKS := valgrind --leak-check=full \
+		 --show-leak-kinds=all \
+		 --track-origins=yes \
+		 --log-file=val-leaks.txt \
+		 --track-fds=yes
 
-.PHONY: all clean fclean re bonus valgrind valgrind_bonus
+HELGRIND := valgrind --tool=helgrind \
+			--log-file=helgrind.txt \
+			--track-fds=yes
+
+DRD := valgrind --tool=drd \
+	   --log-file=val-drd.txt \
+	   --track-fds=yes
+
+val_leaks: re
+	@echo "running valgrind (leaks). input used: './bin/philo 198 401 200 200 10'"
+	@echo "find trace at ./val-leaks.txt"
+	@$(LEAKS) ./$(NAME) 2>&1
+
+val_helg: re
+	@echo "running valgrind (helgrind). input used: './bin/philo 5 800 200 200 7'"
+	@echo "find trace at ./val-helgrind.txt"
+	@$(HELGRIND) ./$(NAME) 2>&1
+
+val_drd: re
+	@echo "running valgrind (drd). input used: './bin/philo 1 800 200 200'"
+	@echo "find trace at ./val-drd.txt"
+	@$(DRD) ./$(NAME) 2>&1
+
+.PHONY: all clean fclean re bonus
