@@ -14,6 +14,28 @@
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
 
-int	ft_atoi(const char *nptr);
+typedef struct s_data_time
+{
+	size_t		n_philo;
+	size_t		die;
+	size_t		eat;
+	size_t		sleep;
+	size_t		must_eat;
+}	t_data_time;
 
+typedef struct s_forks
+{
+	pthread_mutex_t	fork_right;
+	pthread_mutex_t	fork_left;
+}	t_forks;
+
+typedef struct s_philo
+{
+	pthread_t		id;
+	t_data_time		times;
+	t_forks			forks;
+}	t_philo;
+
+int	ft_atoi(const char *nptr);
+int	ft_parse(int argc, char **argv, t_data_time *times);
 #endif

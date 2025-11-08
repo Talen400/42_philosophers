@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 20:49:58 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/04 20:52:58 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/07 18:25:51 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,27 @@ int	ft_atoi(const char *nptr)
 		str++;
 	}
 	return (integer * sign);
+}
+
+int	ft_parse(int argc, char **argv, t_data_time *times)
+{
+	if (argc < 5 | argc > 6)
+	{
+		printf("error\n");
+		return (FAIL);
+	}
+	times->n_philo = ft_atoi(argv[1]);
+	times->die = ft_atoi(argv[2]);
+	times->eat = ft_atoi(argv[3]);
+	times->sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		times->must_eat =ft_atoi(argv[5]);
+	else
+		times->must_eat = 0;
+	printf("%zu\n", times->n_philo);
+	printf("%zu\n", times->die);
+	printf("%zu\n", times->eat);
+	printf("%zu\n", times->sleep);
+	printf("%zu\n", times->must_eat);
+	return (SUCESS);
 }

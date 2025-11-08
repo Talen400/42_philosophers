@@ -11,7 +11,7 @@ RESET = \033[0m
 # Configuration
 NAME := philo
 CC := cc
-CFLAGS	:= -Wextra -Wall -Werror -pthread
+CFLAGS	:= -g -Wextra -Wall -Werror -pthread
 
 # Directories
 SRC_DIR := ./srcs
