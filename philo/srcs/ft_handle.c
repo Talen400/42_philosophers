@@ -1,22 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_handle.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/04 20:49:58 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/12 04:04:50 by tlavared         ###   ########.fr       */
+/*   Created: 2025/11/11 21:05:54 by tlavared          #+#    #+#             */
+/*   Updated: 2025/11/12 02:45:18 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-long	ft_gettime(void)
-{
-	struct timeval	current_time;
+/*
+ *
+ * handler errors and return FAIL
+ *
+ */
 
-	if (gettimeofday(&current_time, NULL) == -1)
-		exit(1);
-	return (current_time.tv_sec * 1000 + current_time.tv_usec / 1000);
+static size_t	ft_strlen(char *str)
+{
+	size_t	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
+int	ft_handler(char *str)
+{
+	size_t	len;
+
+	len = ft_strlen(str);
+	write(2, str, len);
+	return (FAIL);
 }

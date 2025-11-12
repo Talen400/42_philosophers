@@ -11,31 +11,65 @@
 
 # define SUCESS 0
 # define FAIL 1
+# define TRUE 1
+# define FALSE 0
+
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
 
-typedef struct s_data_time
-{
-	size_t		n_philo;
-	size_t		die;
-	size_t		eat;
-	size_t		sleep;
-	size_t		must_eat;
-}	t_data_time;
+/*
+ * Fork data
+ */
 
-typedef struct s_forks
+typedef struct	s_fork
 {
-	pthread_mutex_t	fork_right;
-	pthread_mutex_t	fork_left;
-}	t_forks;
+	size_t			id;
+	pthread_mutex_t	mutex;
+}	t_fork;
+
+/*
+ * Global data
+ */
+
+typedef struct s_data
+{
+	size_t			n_philo;
+	size_t			die;
+	size_t			eat;
+	size_t			sleep;
+	int				must_eat;
+	long			start_time;
+	int				someone_died;
+	t_fork			*forks;
+	pthread_mutex_t	write_lock;
+	pthread_mutex_t	dead_lock;
+	pthread_mutex_t	meal_lock;
+}	t_data;
+
+/*
+ * Philo data
+ */
 
 typedef struct s_philo
 {
-	pthread_t		id;
-	t_data_time		times;
-	t_forks			forks;
+	int				id;
+	pthread_t		thread;
+	int				meals_eaten;
+	long			last_meal_time;
+	t_fork			*left_fork;
+	t_fork			*right_fork;
+	t_data			*data;
 }	t_philo;
 
-int	ft_atoi(const char *nptr);
-int	ft_parse(int argc, char **argv, t_data_time *times);
+// parse.c
+int		ft_parse(int argc, char **argv, t_data *data);
+
+// ft_handle.c
+int		ft_handler(char *str);
+
+// utils.c
+long	ft_gettime(void);
+
+// destroy.c
+void	destrosy_all(t_data *data, t_philo *philos);
 #endif
