@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 22:00:32 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/12 04:32:13 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/13 02:01:47 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * Initialize global mutexes to print and verify dead_lock
  */
 
-int	init_mutexes(t_data *data)
+static int	init_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->write_lock, NULL) != 0)
 		return (FAIL);
@@ -38,13 +38,13 @@ int	init_mutexes(t_data *data)
  * Initialize array of forks (heap)
  */
 
-int	init_forks(t_data *data)
+static int	init_forks(t_data *data)
 {
-	int	i;
+	size_t	i;
 
 	data->forks = malloc (sizeof(t_fork) * data->n_philo);
 	if (!data->forks)
-		return (0);
+		return (FAIL);
 	i = 0;
 	while (i < data->n_philo)
 	{
@@ -65,10 +65,10 @@ int	init_forks(t_data *data)
  * With ID and circular forks
  */
 
-t_philo	*init_philos(t_data *data)
+static t_philo	*init_philos(t_data *data)
 {
 	t_philo	*philos;
-	int		i;
+	size_t	i;
 
 	philos = malloc(sizeof(t_philo) * data->n_philo);
 	if (!philos)
@@ -80,7 +80,8 @@ t_philo	*init_philos(t_data *data)
 		philos[i].meals_eaten = 0;
 		philos[i].last_meal_time = data->start_time;
 		philos[i].data = data;
-		philos[i].left_fork = &data->forks[(i + 1) % data->n_philo];
+		philos[i].left_fork = &data->forks[i];
+		philos[i].right_fork = &data->forks[(i + 1) % data->n_philo];
 		i++;
 	}
 	return (philos);
@@ -93,18 +94,23 @@ t_philo	*init_philos(t_data *data)
 int	init_all(t_data *data, t_philo **philos)
 {
 	data->someone_died = 0;
+	data->all_ate_enough = 0;
 	data->start_time = ft_gettime();
 	if (init_mutexes(data))
-		return (FAIL);
-	if (init_forks(data))
-		return (FAIL);
-	*philos = init_philos(data);
-	if (init_philos(data))
 	{
-		//
-		pthread_mutex_destroy(&data->write_lock);
-		pthread_mutex_destroy(&data->dead_lock);
-		pthread_mutex_destroy(&data->meal_lock);
+		destroy_mutexes(data);
+		return (FAIL);
+	}
+	if (init_forks(data))
+	{
+		destroy_forks(data);
+		destroy_mutexes(data);
+		return (FAIL);
+	}
+	*philos = init_philos(data);
+	if (!philos)
+	{
+		destroy_all(data, *philos);
 		return (FAIL);
 	}
 	return (SUCESS);
