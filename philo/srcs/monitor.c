@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 05:20:29 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/14 06:31:47 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 08:17:03 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	check_meals(t_philo *philos)
 	int		meals;
 
 	data = philos[0].data;
-	if (data->must_eat == -1)
+	if (data->must_eat == FALSE)
 		return (FALSE);
 	all_done = TRUE;
 	i = 0;

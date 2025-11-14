@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 02:18:00 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/14 05:52:23 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 07:51:55 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		thread;
 	int				meals_eaten;
-	long			last_meal_time;
+	size_t			last_meal_time;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	t_data			*data;
