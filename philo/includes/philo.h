@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 02:18:00 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/13 02:18:48 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 05:52:23 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <pthread.h>
 # include <time.h>
 # define SUCESS 0
-# define FAIL 1
+# define FAILURE 1
 # define TRUE 1
 # define FALSE 0
 
@@ -40,6 +40,7 @@ typedef struct s_fork
 
 /*
  * Global data
+ * flags -> someone_died and all_ate_enough
  */
 
 typedef struct s_data
@@ -81,8 +82,9 @@ int		ft_handler(char *str);
 
 // utils.c
 long	ft_gettime(void);
-void	print_status(t_philo *philo, char *status);
 void	ft_usleep(long ms);
+void	print_status(t_philo *philo, char *status);
+void	print_death(t_philo *philo);
 
 // init.c
 int		init_all(t_data *data, t_philo **philos);
@@ -101,5 +103,8 @@ void	thinking(t_philo *philo);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	*philo_routine(void *arg);
+
+// monitor.c
+void	*monitor_routine(void *arg);
 
 #endif

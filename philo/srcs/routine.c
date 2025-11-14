@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:06:20 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/13 02:17:44 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 06:38:04 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	*philo_routine(void *arg)
 	{
 		print_status(philo, "has taken a fork");
 		ft_usleep(philo->data->die);
+		print_death(philo);
 		return (NULL);
 	}
 	if (philo->id % 2 == 0)

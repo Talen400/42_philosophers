@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 21:05:54 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/12 02:45:18 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 05:52:38 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ int	ft_handler(char *str)
 
 	len = ft_strlen(str);
 	write(2, str, len);
-	return (FAIL);
+	return (FAILURE);
 }

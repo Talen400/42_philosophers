@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 22:00:32 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/13 02:01:47 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 05:53:08 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 static int	init_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->write_lock, NULL) != 0)
-		return (FAIL);
+		return (FAILURE);
 	if (pthread_mutex_init(&data->dead_lock, NULL) != 0)
 	{
 		pthread_mutex_destroy(&data->write_lock);
-		return (FAIL);
+		return (FAILURE);
 	}
 	if (pthread_mutex_init(&data->meal_lock, NULL) != 0)
 	{
 		pthread_mutex_destroy(&data->write_lock);
 		pthread_mutex_destroy(&data->dead_lock);
-		return (FAIL);
+		return (FAILURE);
 	}
 	return (SUCESS);
 }
@@ -44,7 +44,7 @@ static int	init_forks(t_data *data)
 
 	data->forks = malloc (sizeof(t_fork) * data->n_philo);
 	if (!data->forks)
-		return (FAIL);
+		return (FAILURE);
 	i = 0;
 	while (i < data->n_philo)
 	{
@@ -53,7 +53,7 @@ static int	init_forks(t_data *data)
 			while (--i >= 0)
 				pthread_mutex_destroy(&data->forks[i].mutex);
 			free(data->forks);
-			return (FAIL);
+			return (FAILURE);
 		}
 		i++;
 	}
@@ -93,25 +93,25 @@ static t_philo	*init_philos(t_data *data)
 
 int	init_all(t_data *data, t_philo **philos)
 {
-	data->someone_died = 0;
-	data->all_ate_enough = 0;
+	data->someone_died = FALSE;
+	data->all_ate_enough = FALSE;
 	data->start_time = ft_gettime();
 	if (init_mutexes(data))
 	{
 		destroy_mutexes(data);
-		return (FAIL);
+		return (FAILURE);
 	}
 	if (init_forks(data))
 	{
 		destroy_forks(data);
 		destroy_mutexes(data);
-		return (FAIL);
+		return (FAILURE);
 	}
 	*philos = init_philos(data);
 	if (!philos)
 	{
 		destroy_all(data, *philos);
-		return (FAIL);
+		return (FAILURE);
 	}
 	return (SUCESS);
 }

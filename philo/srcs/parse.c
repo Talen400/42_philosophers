@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 02:05:15 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/13 00:54:35 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 05:53:22 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	ft_check_str(int argc, char **argv)
 		{
 			if (!ft_isdigit((argv[len][i])))
 			{
-				return (FAIL);
+				return (FAILURE);
 			}
 			i++;
 		}
@@ -76,7 +76,7 @@ static int	ft_check_str(int argc, char **argv)
 int	ft_parse(int argc, char **argv, t_data *data)
 {
 	if (argc < 5 || argc > 6 || ft_check_str(argc, argv))
-		return (FAIL);
+		return (FAILURE);
 	data->n_philo = ft_atoil(argv[1]);
 	data->die = ft_atoil(argv[2]);
 	data->eat = ft_atoil(argv[3]);
@@ -84,6 +84,6 @@ int	ft_parse(int argc, char **argv, t_data *data)
 	if (argc == 6)
 		data->must_eat = ft_atoil(argv[5]);
 	else
-		data->must_eat = 0;
+		data->must_eat = FALSE;
 	return (SUCESS);
 }

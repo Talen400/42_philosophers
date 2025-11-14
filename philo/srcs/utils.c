@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 20:49:58 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/13 01:37:48 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 06:16:34 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,37 @@ void	ft_usleep(long ms)
 /*
  * To threads not try write the some buffer in same time
  * This protect the buffer with mutex
+ *
+ * And print only philo while lives
  */
+
 void	print_status(t_philo *philo, char *status)
+{
+	long	timestamp;
+	int		stop;
+
+	pthread_mutex_lock(&philo->data->write_lock);
+	pthread_mutex_lock(&philo->data->dead_lock);
+	stop = (philo->data->someone_died || philo->data->all_ate_enough); 
+	pthread_mutex_unlock(&philo->data->dead_lock);
+	if (stop == FALSE)	
+	{
+		timestamp = ft_gettime() - philo->data->start_time;
+		printf("%ld %d %s\n", timestamp, philo->id, status);
+	}
+	pthread_mutex_unlock(&philo->data->write_lock);
+}
+
+/*
+ * print when a philo died
+ */
+
+void	print_death(t_philo *philo)
 {
 	long	timestamp;
 
 	pthread_mutex_lock(&philo->data->write_lock);
 	timestamp = ft_gettime() - philo->data->start_time;
-	printf("%ld %d %s\n", timestamp, philo->id, status);
+	printf("%ld %d died\n", timestamp, philo->id);
 	pthread_mutex_unlock(&philo->data->write_lock);
 }

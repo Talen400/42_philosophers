@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 01:19:09 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/13 02:15:44 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/14 05:49:26 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	main(int argc, char **argv)
 {
-	t_data	data;
-	t_philo	*philos;
-	size_t	i;
+	t_data		data;
+	t_philo		*philos;
+	pthread_t	monitor;
+	size_t		i;
 
 	if (ft_parse(argc, argv, &data))
 		return (ft_handler("parse() error\n"));
@@ -32,6 +33,8 @@ int	main(int argc, char **argv)
 			return (ft_handler("thead creatiion failed\n"));
 		}
 	}
+	pthread_create(&monitor, NULL, monitor_routine, philos);
+	pthread_join(monitor, NULL);
 	i = -1;
 	while (++i < data.n_philo)
 		pthread_join(philos[i].thread, NULL);
