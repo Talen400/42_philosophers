@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 20:49:58 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/14 06:16:34 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/15 07:11:38 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,21 @@ long	ft_gettime(void)
 void	ft_usleep(long ms)
 {
 	long	start;
+	long	elapsed;
+	long	remaining;
 
 	start = ft_gettime();
-	while ((ft_gettime() - start) < ms)
-		usleep(500);
+	while (1)
+	{
+		elapsed = ft_gettime() - start;
+		remaining = ms - elapsed;
+		if (remaining <= 0)
+			break ;
+		else if (remaining > 1)
+			usleep(100);
+		else
+			usleep(10);
+	}
 }
 
 /*
@@ -57,9 +68,9 @@ void	print_status(t_philo *philo, char *status)
 
 	pthread_mutex_lock(&philo->data->write_lock);
 	pthread_mutex_lock(&philo->data->dead_lock);
-	stop = (philo->data->someone_died || philo->data->all_ate_enough); 
+	stop = (philo->data->someone_died || philo->data->all_ate_enough);
 	pthread_mutex_unlock(&philo->data->dead_lock);
-	if (stop == FALSE)	
+	if (stop == FALSE)
 	{
 		timestamp = ft_gettime() - philo->data->start_time;
 		printf("%ld %d %s\n", timestamp, philo->id, status);

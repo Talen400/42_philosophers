@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 05:20:29 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/14 08:17:03 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/15 04:14:17 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 static int	check_death(t_philo *philos)
 {
 	size_t	i;
-	size_t	last_meal;
+	long	last_meal;
+	long	time_since_meal;
 	t_data	*data;
 
 	data = philos[0].data;
@@ -33,7 +34,8 @@ static int	check_death(t_philo *philos)
 		pthread_mutex_lock(&data->meal_lock);
 		last_meal = philos[i].last_meal_time;
 		pthread_mutex_unlock(&data->meal_lock);
-		if (ft_gettime() - last_meal > data->die)
+		time_since_meal = ft_gettime() - last_meal;
+		if (time_since_meal > data->die)
 		{
 			print_death(&philos[i]);
 			pthread_mutex_lock(&data->dead_lock);
@@ -54,7 +56,7 @@ static int	check_meals(t_philo *philos)
 	int		meals;
 
 	data = philos[0].data;
-	if (data->must_eat == FALSE)
+	if (data->must_eat == -1)
 		return (FALSE);
 	all_done = TRUE;
 	i = 0;

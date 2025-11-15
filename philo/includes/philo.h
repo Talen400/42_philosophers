@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 02:18:00 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/14 07:51:55 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/15 06:41:24 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ typedef struct s_fork
 typedef struct s_data
 {
 	size_t			n_philo;
-	size_t			die;
-	size_t			eat;
-	size_t			sleep;
-	int				must_eat;
+	long			die;
+	long			eat;
+	long			sleep;
 	long			start_time;
+	int				must_eat;
 	int				someone_died;
 	int				all_ate_enough;
 	t_fork			*forks;
@@ -68,7 +68,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		thread;
 	int				meals_eaten;
-	size_t			last_meal_time;
+	long			last_meal_time;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	t_data			*data;
@@ -95,16 +95,17 @@ void	destroy_forks(t_data *data);
 void	destroy_mutexes(t_data *data);
 
 // forks.c
-void	take_forks(t_philo *philo);
+int		take_forks(t_philo *philo);
 void	drop_forks(t_philo *philo);
 
 // routine.c
 void	thinking(t_philo *philo);
-void	eating(t_philo *philo);
+int		eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	*philo_routine(void *arg);
 
 // monitor.c
 void	*monitor_routine(void *arg);
+int	should_stop(t_philo *philo);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:06:20 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/14 06:38:04 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/11/15 07:15:44 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 void	thinking(t_philo *philo)
 {
 	print_status(philo, "is thinking");
+	if (philo->data->n_philo % 2 != 0)
+		ft_usleep(10);
 }
 
 /*
  * function of philo'eat
  */
 
-void	eating(t_philo *philo)
+int		eating(t_philo *philo)
 {
-	take_forks(philo);
+	if (take_forks(philo) == FAILURE)
+		return (FAILURE);
 	print_status(philo, "is eating");
 	pthread_mutex_lock(&philo->data->meal_lock);
 	philo->last_meal_time = ft_gettime();
@@ -35,6 +38,7 @@ void	eating(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->meal_lock);
 	ft_usleep(philo->data->eat);
 	drop_forks(philo);
+	return (SUCESS);
 }
 
 /*
@@ -51,7 +55,7 @@ void	sleeping(t_philo *philo)
  * Routine of the philo
  */
 
-static int	should_stop(t_philo *philo)
+int	should_stop(t_philo *philo)
 {
 	int	stop;
 
@@ -61,6 +65,12 @@ static int	should_stop(t_philo *philo)
 	return (stop);
 }
 
+/*
+ *
+ * start with uneven numbers
+ * Then, start routine
+ *
+ */
 void	*philo_routine(void *arg)
 {
 	t_philo	*philo;
@@ -70,15 +80,17 @@ void	*philo_routine(void *arg)
 	{
 		print_status(philo, "has taken a fork");
 		ft_usleep(philo->data->die);
-		print_death(philo);
 		return (NULL);
 	}
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 != 1)
 		ft_usleep(1);
 	while (!should_stop(philo))
 	{
 		thinking(philo);
-		eating(philo);
+		if (should_stop(philo))
+			break ;
+		if (eating(philo) == FAILURE)
+			break ;
 		if (should_stop(philo))
 			break ;
 		sleeping(philo);

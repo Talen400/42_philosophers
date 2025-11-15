@@ -1,2 +1,7 @@
 *.o
 *.swp
+*tester
+*Tester
+*mandatory
+.philo
+.philo_bonus
