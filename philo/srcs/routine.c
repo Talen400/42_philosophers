@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:06:20 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/15 07:15:44 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/08 20:10:27 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	thinking(t_philo *philo)
  * function of philo'eat
  */
 
-int		eating(t_philo *philo)
+int	eating(t_philo *philo)
 {
 	if (take_forks(philo) == FAILURE)
 		return (FAILURE);

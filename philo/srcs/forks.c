@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 01:08:46 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/15 06:39:46 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/08 20:07:11 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,23 @@ int	take_forks(t_philo *philo)
 		second = philo->left_fork;
 	}
 	pthread_mutex_lock(&first->mutex);
+	/*
 	if (should_stop(philo))
 	{
 		pthread_mutex_unlock(&first->mutex);
 		return (FAILURE);
 	}
+	*/
 	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(&second->mutex);
+	/*
 	if (should_stop(philo))
 	{
 		pthread_mutex_unlock(&first->mutex);
 		pthread_mutex_unlock(&second->mutex);
 		return (FAILURE);
 	}
+	*/
 	print_status(philo, "has taken a fork");
 	return (SUCESS);
 }

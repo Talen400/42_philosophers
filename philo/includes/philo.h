@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 02:18:00 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/15 06:41:24 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/08 20:10:58 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ void	*philo_routine(void *arg);
 
 // monitor.c
 void	*monitor_routine(void *arg);
-int	should_stop(t_philo *philo);
+int		should_stop(t_philo *philo);
 
 #endif
