@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 22:00:32 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/15 03:24:58 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/11 18:56:48 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ static t_philo	*init_philos(t_data *data)
 
 int	init_all(t_data *data, t_philo **philos)
 {
-	data->someone_died = FALSE;
-	data->all_ate_enough = FALSE;
 	data->start_time = ft_gettime();
 	if (init_mutexes(data))
 	{
