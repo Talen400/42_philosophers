@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 07:52:11 by tlavared          #+#    #+#             */
-/*   Updated: 2025/12/11 21:40:15 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/11 22:38:14 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	wait_for_process(t_philo *philos, t_data *data)
 int	main_routine(t_data *data, t_philo *philos)
 {
 	size_t	i;
-	
+
 	i = 0;
 	while (i < data->n_philo)
 	{
@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 	t_philo		*philos;
 
 	ft_memset(&data, 0, sizeof(t_data));
-	philos = ft_memset(&philos, 0, sizeof(t_data ));
+	philos = ft_memset(&philos, 0, sizeof(t_data));
 	if (ft_parse(argc, argv, &data))
 		return (ft_handler("parse() error\n"));
 	if (init_all(&data, &philos))
