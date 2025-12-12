@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 02:18:00 by tlavared          #+#    #+#             */
-/*   Updated: 2025/12/11 18:53:35 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:28:41 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ long	ft_gettime(void);
 void	ft_usleep(long ms);
 void	print_status(t_philo *philo, char *status);
 void	print_death(t_philo *philo);
-void	*ft_memset(void *s, int c, size_t n);
 
 // init.c
 int		init_all(t_data *data, t_philo **philos);

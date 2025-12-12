@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 07:52:11 by tlavared          #+#    #+#             */
-/*   Updated: 2025/12/11 22:38:14 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:27:38 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ int	main(int argc, char **argv)
 	t_data		data;
 	t_philo		*philos;
 
-	ft_memset(&data, 0, sizeof(t_data));
-	philos = ft_memset(&philos, 0, sizeof(t_data));
+	memset(&data, 0, sizeof(t_data));
 	if (ft_parse(argc, argv, &data))
 		return (ft_handler("parse() error\n"));
 	if (init_all(&data, &philos))

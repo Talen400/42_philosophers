@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 08:26:47 by tlavared          #+#    #+#             */
-/*   Updated: 2025/12/11 20:22:55 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/12 16:26:17 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,4 @@ void	print_death(t_philo *philo)
 	timestamp = ft_gettime() - philo->data->start_time;
 	printf("%ld %d died\n", timestamp, philo->id);
 	sem_post(philo->data->write_lock);
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t			i;
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *) s;
-	i = 0;
-	while (i < n)
-	{
-		*ptr = c;
-		ptr++;
-		i++;
-	}
-	return (s);
 }
