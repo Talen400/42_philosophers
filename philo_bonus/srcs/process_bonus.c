@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 19:42:06 by tlavared          #+#    #+#             */
-/*   Updated: 2025/12/11 21:39:18 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/11 21:48:37 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	philo_process(t_philo *philo)
 	{
 		print_status(philo, "has taken a fork");
 		ft_usleep(philo->data->die);
+		print_death(philo);
 		exit(1);
 	}
 	pthread_create(&monitor, NULL, monitor_thread, philo);

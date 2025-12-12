@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 05:20:29 by tlavared          #+#    #+#             */
-/*   Updated: 2025/11/15 04:14:17 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:54:04 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	check_meals(t_philo *philos)
 		pthread_mutex_lock(&data->meal_lock);
 		meals = philos[i].meals_eaten;
 		pthread_mutex_unlock(&data->meal_lock);
-		if (meals < data->must_eat)
+		if (meals <= data->must_eat)
 		{
 			all_done = FALSE;
 			break ;
