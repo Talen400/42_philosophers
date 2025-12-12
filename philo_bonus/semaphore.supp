@@ -1,0 +1,20 @@
+{
+   sem_open_supression
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:tsearch
+   fun:__sem_check_add_mapping
+   fun:sem_open@@GLIBC_2.*
+}
+
+{
+   pthread_tls_supression
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:calloc
+   fun:allocate_dtv
+   fun:_dl_allocate_tls
+   fun:allocate_stack
+   fun:pthread_create@@GLIBC_2.*
+}

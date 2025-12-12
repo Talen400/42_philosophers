@@ -1,0 +1,58 @@
+#include "../includes/semaphore_bonus.h"
+
+/*
+ * init the semaphore
+ */
+
+int		semaphore_init(t_semaphore *sem, int value)
+{
+	sem->value = value;
+	if (pthread_mutex_init(&sem->mutex, NULL) != 0)
+		return (-1);
+	if (pthread_cond_init(&sem->cond, NULL) != 0)
+	{
+		pthread_mutex_destroy(&sem->mutex);
+		return (-1);
+	}
+	return (0);
+}
+
+/*
+ * Equivalent of sem_wait
+ *
+ * if value > 0: decrement and continue
+ * if value = 0: block until someone do post
+ */
+
+void	semaphore_wait(t_semaphore *sem)
+{
+	pthread_mutex_lock(&sem->mutex);
+	while (sem->value == 0)
+		pthread_cond_wait(&sem->cond, &sem->mutex);
+	sem->value--;
+	pthread_mutex_unlock(&sem->mutex);
+}
+
+/*
+ * Equivalent of sem_post
+ * 
+ * Incriment value and call a thread waiting (If exist)
+ */
+
+void	semaphore_post(t_semaphore *sem)
+{
+	pthread_mutex_lock(&sem->mutex);
+	sem->value++;
+	pthread_cond_signal(&sem->cond);
+	pthread_mutex_unlock(&sem->mutex);
+}
+
+/*
+ * Destroy a semaphore
+ */
+
+void	semaphore_destroy(t_semaphore *sem)
+{
+	pthread_mutex_destroy(&sem->mutex);
+	pthread_cond_destroy(&sem->cond);
+}

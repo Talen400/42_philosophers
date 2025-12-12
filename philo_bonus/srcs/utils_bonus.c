@@ -6,7 +6,7 @@
 /*   By: tlavared <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/10 08:26:47 by tlavared          #+#    #+#             */
-/*   Updated: 2025/12/10 08:27:23 by tlavared         ###   ########.fr       */
+/*   Updated: 2025/12/11 20:22:55 by tlavared         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ void	print_status(t_philo *philo, char *status)
 	long	timestamp;
 	int		stop;
 
-	pthread_mutex_lock(&philo->data->write_lock);
-	pthread_mutex_lock(&philo->data->dead_lock);
+	sem_wait(philo->data->write_lock);
+	sem_wait(philo->data->dead_lock);
 	stop = (philo->data->someone_died || philo->data->all_ate_enough);
-	pthread_mutex_unlock(&philo->data->dead_lock);
+	sem_post(philo->data->dead_lock);
 	if (stop == FALSE)
 	{
 		timestamp = ft_gettime() - philo->data->start_time;
 		printf("%ld %d %s\n", timestamp, philo->id, status);
 	}
-	pthread_mutex_unlock(&philo->data->write_lock);
+	sem_post(philo->data->write_lock);
 }
 
 /*
@@ -86,8 +86,24 @@ void	print_death(t_philo *philo)
 {
 	long	timestamp;
 
-	pthread_mutex_lock(&philo->data->write_lock);
+	sem_wait(philo->data->write_lock);
 	timestamp = ft_gettime() - philo->data->start_time;
 	printf("%ld %d died\n", timestamp, philo->id);
-	pthread_mutex_unlock(&philo->data->write_lock);
+	sem_post(philo->data->write_lock);
+}
+
+void	*ft_memset(void *s, int c, size_t n)
+{
+	size_t			i;
+	unsigned char	*ptr;
+
+	ptr = (unsigned char *) s;
+	i = 0;
+	while (i < n)
+	{
+		*ptr = c;
+		ptr++;
+		i++;
+	}
+	return (s);
 }

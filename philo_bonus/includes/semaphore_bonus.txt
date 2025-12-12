@@ -1,0 +1,29 @@
+#ifndef SEMAPHORE_BONUS_H
+# define SEMAPHORE_BONUS_H
+
+# include <pthread.h>
+
+/*
+ * my semaphore version :>
+ */
+
+typedef struct s_semaphore
+{
+	int				value;
+	pthread_mutex_t	mutex;
+	pthread_cond_t	cond;
+}	t_semaphore;
+
+// init semaphore with a value
+int		semaphore_init(t_semaphore *sem, int value);
+
+// Wait function (decrement, blocking if value = 0)
+void	semaphore_wait(t_semaphore *sem);
+
+// Post (increment, to who is waiting)
+void	semaphore_post(t_semaphore *sem);
+
+// Destroy
+void	semaphore_destroy(t_semaphore *sem);
+
+#endif

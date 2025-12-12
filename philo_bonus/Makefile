@@ -19,9 +19,14 @@ OBJ_BONUS_DIR := ./objs
 
 # Bonus sources
 SRCS_BONUS := $(SRC_BONUS_DIR)/main_bonus.c \
+			  $(SRC_BONUS_DIR)/ft_handle_bonus.c \
+			  $(SRC_BONUS_DIR)/init_bonus.c \
+			  $(SRC_BONUS_DIR)/monitor_bonus.c \
 			  $(SRC_BONUS_DIR)/parse_bonus.c \
+			  $(SRC_BONUS_DIR)/process_bonus.c\
+			  $(SRC_BONUS_DIR)/semaphores_bonus.c \
 			  $(SRC_BONUS_DIR)/utils_bonus.c \
-			  $(SRC_BONUS_DIR)/ft_handle_bonus.c 
+			  $(SRC_BONUS_DIR)/destroy_bonus.c \
 
 OBJS_BONUS := $(SRCS_BONUS:$(SRC_BONUS_DIR)/%.c=$(OBJ_BONUS_DIR)/%.o)
 
